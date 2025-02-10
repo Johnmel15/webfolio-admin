@@ -5,9 +5,14 @@ import { useAuthStore } from "../store/authStore";
 import { Navigate, Route, Routes, BrowserRouter } from "react-router-dom";
 import { DashboardContainer } from "../pages/Dashboard";
 import { MainLayout } from "../layout";
-import LoginForm from "../pages/Login";
 import { About } from "../pages/About";
 import { TechStack } from "../pages/TechStack";
+import { ExperiencePage } from "../pages/Experience";
+import { ProjectPage } from "../pages/Projects";
+import { EmailPage } from "../pages/Emails";
+import { LeadsPage } from "../pages/Leads";
+import { SettingsPage } from "../pages/Settings";
+import { LoginPage } from "../pages/Login";
 
 interface RouteProps {
   children: ReactNode;
@@ -16,28 +21,23 @@ interface RouteProps {
 // Protected Route Component
 const ProtectedRoute: React.FC<RouteProps> = ({ children }) => {
   const { isAuthenticated } = useAuthStore();
-  // return isAuthenticated ? (
-  //   <>
-  //     <MainLayout />
-  //     {children}
-  //   </>
-  // ) : (
-  //   <Navigate to="/login" />
-  // );
 
-  return (
-    <>
-      <MainLayout>{children}</MainLayout>
-    </>
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
 
-  return;
+  return <MainLayout>{children}</MainLayout>;
 };
 
 // Public Route Component (redirect if authenticated)
 const PublicRoute: React.FC<RouteProps> = ({ children }) => {
-  const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? <Navigate to="/dashboard" /> : children;
+  const { isAuthenticated, token } = useAuthStore();
+
+  if (isAuthenticated && token) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
 };
 
 const AppRoutes: React.FC = () => {
@@ -49,7 +49,7 @@ const AppRoutes: React.FC = () => {
           path="/login"
           element={
             <PublicRoute>
-              <LoginForm />
+              <LoginPage />
             </PublicRoute>
           }
         />
@@ -77,6 +77,46 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <TechStack />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/experience"
+          element={
+            <ProtectedRoute>
+              <ExperiencePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <ProtectedRoute>
+              <ProjectPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/emails"
+          element={
+            <ProtectedRoute>
+              <EmailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/leads"
+          element={
+            <ProtectedRoute>
+              <LeadsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
             </ProtectedRoute>
           }
         />

@@ -1,42 +1,16 @@
+import { Pencil, Plus } from "lucide-react";
 import { FC } from "react";
+import { SiReact } from "react-icons/si";
+import { ModalProps } from "../../../types/modal";
 
-const Table: FC = () => {
+const Table: FC<ModalProps> = (props) => {
+  const { setIsModalOpen } = props;
   const users = [
     {
-      name: "Lindsay Walton",
-      title: "Front-end Developer",
-      email: "lindsay.walton@example.com",
-      role: "Member",
-    },
-    {
-      name: "Courtney Henry",
-      title: "Designer",
-      email: "courtney.henry@example.com",
-      role: "Admin",
-    },
-    {
-      name: "Tom Cook",
-      title: "Director of Product",
-      email: "tom.cook@example.com",
-      role: "Member",
-    },
-    {
-      name: "Whitney Francis",
-      title: "Copywriter",
-      email: "whitney.francis@example.com",
-      role: "Admin",
-    },
-    {
-      name: "Leonard Krasner",
-      title: "Senior Designer",
-      email: "leonard.krasner@example.com",
-      role: "Owner",
-    },
-    {
-      name: "Floyd Miles",
-      title: "Principal Designer",
-      email: "floyd.miles@example.com",
-      role: "Member",
+      icon: <SiReact className="text-[#61DAFB]" />,
+      name: "React.js",
+      category: "Frontend",
+      icon_color: "61DAFB",
     },
   ];
 
@@ -52,7 +26,11 @@ const Table: FC = () => {
             A list of all the tech stack I used throughout my career.
           </p>
         </div>
-        <button className="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition gap-2"
+        >
+          <Plus className="w-[18px]" />
           Add Tech Stack
         </button>
       </div>
@@ -75,20 +53,25 @@ const Table: FC = () => {
           <tbody>
             {users.map((user, index) => (
               <tr key={index} className="border-b hover:bg-gray-100 transition">
-                <td className="px-4 py-3 text-gray-800 text-left text-[11px]">
+                <td className="px-4 py-3 text-gray-800 text-left text-[20px]">
+                  {user.icon}
+                </td>
+                <td className="px-4 py-3 text-gray-600 text-left text-[12px]">
                   {user.name}
                 </td>
-                <td className="px-4 py-3 text-gray-600 text-left text-[11px]">
-                  {user.title}
+                <td className="px-4 py-3 text-gray-600 text-left text-[12px]">
+                  {user.category}
                 </td>
-                <td className="px-4 py-3 text-gray-600 text-left text-[11px]">
-                  {user.email}
+                <td className="px-4 py-3 text-gray-600 text-left text-[12px]">
+                  <div
+                    className={`bg-[#${user.icon_color}] w-fit px-2 py-1 rounded-md`}
+                  >
+                    #{user.icon_color}
+                  </div>
                 </td>
-                <td className="px-4 py-3 text-gray-600 text-left text-[11px]">
-                  {user.role}
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <button className="text-purple-600 hover:underline text-[11px]">
+                <td className="px-4 py-3 flex justify-end">
+                  <button className="flex items-center bg-purple-600 text-[14px] text-white px-4 py-2 rounded-md font-medium gap-2">
+                    <Pencil className="w-[18px]" />
                     Edit
                   </button>
                 </td>

@@ -1,11 +1,7 @@
-import {
-  BetweenHorizonalEnd,
-  BetweenHorizonalStart,
-  CircleUser,
-  LogOut,
-} from "lucide-react";
+import { AlignRight, CircleUser, LogOut, Menu } from "lucide-react";
 import { FC, useState } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 interface HeaderProps {
   toggleMinimized: () => void;
@@ -13,8 +9,16 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ toggleMinimized, isMinimized }) => {
+  const { logout } = useAuthStore();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirect to login after logout
+  };
 
   const pathSegments = location.pathname.split("/").filter(Boolean);
   const breadcrumbs = pathSegments.map((segment, index) => ({
@@ -61,7 +65,7 @@ const Header: FC<HeaderProps> = ({ toggleMinimized, isMinimized }) => {
           onClick={toggleMinimized}
           className="cursor-pointer text-gray-600 hover:text-gray-700"
         >
-          {isMinimized ? <BetweenHorizonalStart /> : <BetweenHorizonalEnd />}
+          {isMinimized ? <Menu /> : <AlignRight />}
         </button>
       </div>
 
@@ -85,7 +89,7 @@ const Header: FC<HeaderProps> = ({ toggleMinimized, isMinimized }) => {
               Account
             </NavLink>
             <div
-              onClick={() => alert("Logout!")}
+              onClick={handleLogout}
               className="flex items-center gap-2 text-left px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm cursor-pointer"
             >
               <LogOut className="w-[15px] h-[15px]" />

@@ -1,7 +1,1 @@
-import { FC } from "react";
-
-const LoginForm: FC = () => {
-  return <div></div>;
-};
-
-export default LoginForm;
+export { default as LoginPage } from "./LoginForm";
