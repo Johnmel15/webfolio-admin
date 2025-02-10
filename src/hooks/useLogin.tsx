@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/authStore";
-import axios from "axios";
+import api from "../config/configAPI";
 
 const useLogin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -20,10 +20,7 @@ const useLogin = () => {
     setError(null);
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        formData
-      );
+      const response = await api().post("/auth/login", formData);
       const { token } = response.data;
 
       login(token); // Save token in Zustand store
