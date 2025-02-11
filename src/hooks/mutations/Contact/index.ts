@@ -1,10 +1,9 @@
-import { usePostMutation } from "../../../query/postMutation";
-import { SendEmailArgs } from "../../../types/args";
+import { usePostQuery } from "../../../query/usePostQuery";
 
 const useContactMutation = () => {
-  const post = usePostMutation();
+  const post = usePostQuery();
 
-  const sendEmail = async (variables: SendEmailArgs) => {
+  const sendEmail = async (variables: any) => {
     return post.mutateAsync({
       endpoint: "/send-email",
       variables,

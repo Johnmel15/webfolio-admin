@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import api from "../config/configAPI";
+import Cookies from "js-cookie";
 
 const useLogin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -23,6 +24,7 @@ const useLogin = () => {
       const response = await api().post("/auth/login", formData);
       const { token } = response.data;
 
+      Cookies.set("token", token);
       login(token); // Save token in Zustand store
       window.location.href = "/dashboard"; // Redirect on success
     } catch (err: any) {

@@ -29,8 +29,6 @@ const Header: FC<HeaderProps> = ({ toggleMinimized, isMinimized }) => {
     path: `/${pathSegments.slice(0, index + 1).join("/")}`,
   }));
 
-  console.log(breadcrumbs);
-
   return (
     <div className="px-6 py-3 flex items-center justify-between relative">
       <div className="flex items-center gap-10">

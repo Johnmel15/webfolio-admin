@@ -9,6 +9,10 @@ import * as SiIcons from "react-icons/si";
 import { IconType } from "react-icons";
 import { SketchPicker } from "react-color";
 import debounce from "lodash.debounce";
+import { useTechStackMutation } from "../../../hooks/mutations";
+import { showToast } from "../../../components/Toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetOneTechStackQuery } from "../../../hooks/queries";
 
 const allIcons = {
   ...FaIcons,
@@ -20,13 +24,21 @@ const allIcons = {
 
 const allIconsList = Object.keys(allIcons); // Precompute the list
 
-const FormModal: FC<ModalProps> = ({ setIsModalOpen }) => {
+const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
+  const cache = useQueryClient();
+  const { createTechStack, updateTechStack } = useTechStackMutation();
+  const { dataOneTechStack, loadingOneTechStack } = useGetOneTechStackQuery(
+    id ? id : ""
+  );
+
+  console.log(dataOneTechStack);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [filteredIcons, setFilteredIcons] = useState<string[]>([]);
   const [isFetchingIcons, setIsFetchingIcons] = useState<boolean>(false);
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const colorPickerRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState({
     icon: "",
     name: "",
@@ -56,12 +68,12 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen }) => {
   useEffect(() => {
     const debouncedSearch = debounce((term) => {
       setIsFetchingIcons(true);
-      if (term.trim() === "") {
+      if (term?.trim() === "") {
         setFilteredIcons([]);
         return;
       }
       const results = allIconsList
-        .filter((icon) => icon.toLowerCase().includes(term.toLowerCase()))
+        .filter((icon) => icon?.toLowerCase().includes(term?.toLowerCase()))
         .slice(0, 50); // Limit results for performance
       setFilteredIcons(results);
       setIsFetchingIcons(false);
@@ -72,7 +84,34 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen }) => {
     return () => debouncedSearch.cancel();
   }, [searchTerm]);
 
-  console.log(formData);
+  useEffect(() => {
+    if (!loadingOneTechStack && id) {
+      setSearchTerm(dataOneTechStack?.icon);
+      setFormData({
+        icon: dataOneTechStack?.icon,
+        name: dataOneTechStack?.name,
+        category: dataOneTechStack?.category,
+        icon_color: dataOneTechStack?.icon_color,
+      });
+    }
+  }, [id, loadingOneTechStack, dataOneTechStack]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    let response: any = {};
+
+    if (id) {
+      response = await updateTechStack({ ...formData, id: id });
+    } else {
+      response = await createTechStack(formData);
+    }
+
+    if (response.code === 200) {
+      showToast(response.message, "success");
+      setIsModalOpen(false);
+      cache.invalidateQueries({ queryKey: ["tech_stack_list"] });
+    }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
@@ -80,13 +119,18 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen }) => {
         {/* Close Button */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Add Tech Stack</h2>
-          <button onClick={() => setIsModalOpen(false)}>
+          <button
+            onClick={() => {
+              setIsModalOpen(false);
+              setId?.("");
+            }}
+          >
             <X className="w-6 h-6 text-gray-600 hover:text-gray-800" />
           </button>
         </div>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Icon Selector */}
           <div className="relative">
             <label className="block text-left text-sm font-medium text-gray-700">
@@ -224,7 +268,7 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen }) => {
             type="submit"
             className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition"
           >
-            Add Tech Stack
+            {id ? `Update` : `Add`} Tech Stack
           </button>
         </form>
       </div>
