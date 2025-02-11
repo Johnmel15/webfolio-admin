@@ -7,7 +7,6 @@ interface SidebarProps {
 }
 
 const Sidebar: FC<SidebarProps> = ({ isMinimized }) => {
-
   return (
     <div
       className={`bg-white h-screen p-3 shadow-lg flex-col   ${
@@ -15,9 +14,7 @@ const Sidebar: FC<SidebarProps> = ({ isMinimized }) => {
       }`}
     >
       {/* Sidebar Header */}
-      <div
-        className={`flex justify-center items-center px-3 py-2 `}
-      >
+      <div className={`flex justify-center items-center px-3 py-2 `}>
         <h1 className={`font-bold ${isMinimized ? "flex" : "hidden"}`}>WF</h1>
         <h1 className={`font-bold ${isMinimized ? "hidden" : "flex"}`}>
           WebFolio

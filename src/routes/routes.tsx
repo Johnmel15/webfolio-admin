@@ -50,7 +50,7 @@ const AppRoutes: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <IdleLogout logoutCallback={handleLogout} />;
+      <IdleLogout logoutCallback={handleLogout} />
       <Routes>
         {/* Public Routes */}
         <Route
