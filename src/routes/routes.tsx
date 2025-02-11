@@ -13,6 +13,7 @@ import { EmailPage } from "../pages/Emails";
 import { LeadsPage } from "../pages/Leads";
 import { SettingsPage } from "../pages/Settings";
 import { LoginPage } from "../pages/Login";
+import IdleLogout from "../components/IdleLogout";
 
 interface RouteProps {
   children: ReactNode;
@@ -41,8 +42,15 @@ const PublicRoute: React.FC<RouteProps> = ({ children }) => {
 };
 
 const AppRoutes: React.FC = () => {
+  const { logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    return <Navigate to="/login" replace />;
+  };
+
   return (
     <BrowserRouter>
+      <IdleLogout logoutCallback={handleLogout} />;
       <Routes>
         {/* Public Routes */}
         <Route
