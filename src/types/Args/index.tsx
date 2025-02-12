@@ -5,3 +5,10 @@ export type CreateTechStackArgs = {
   category: string;
   icon_color: string;
 };
+
+export type PaginationParams = {
+  page: number;
+  limit: number;
+  search?: string;
+  category?: string;
+};

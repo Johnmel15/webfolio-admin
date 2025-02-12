@@ -9,7 +9,7 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = ({ isMinimized }) => {
   return (
     <div
-      className={`bg-white h-auto p-3 shadow-lg flex-col   ${
+      className={`bg-white h-screen p-3 shadow-lg flex-col   ${
         isMinimized ? "w-[83px]" : "w-[250px]"
       }`}
     >

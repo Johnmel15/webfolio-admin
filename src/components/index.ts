@@ -1,1 +1,1 @@
-export { default as Toast } from "./Toast";
+export { CustomModal, Toast, Pagination } from "./ui";

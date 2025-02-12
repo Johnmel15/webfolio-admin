@@ -12,31 +12,52 @@ interface TechStackProps {
   setIsModalOpen: (value: boolean) => void;
   isModalOpen: boolean;
   handleEdit: (id: string) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
 }
 
 const Table: FC<TechStackProps> = (props) => {
-  const { setIsModalOpen, handleEdit, data, isLoading } = props;
+  const {
+    setIsModalOpen,
+    handleEdit,
+    data,
+    isLoading,
+    searchTerm,
+    setSearchTerm,
+  } = props;
 
-  console.log(data);
   return (
     <div className="bg-white shadow-md rounded-lg p-6 w-[100%]">
       {/* Header Section */}
       <div className="flex justify-between items-center mb-4">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-800 text-left">
-            Tech Stack
-          </h2>
-          <p className="text-sm text-gray-500">
-            A list of all the tech stack I used throughout my career.
-          </p>
+        <div className="flex items-center w-full">
+          <div className="flex items-center gap-2 w-full">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition gap-2"
+            >
+              <Plus className="w-[18px]" />
+              Add Tech Stack
+            </button>
+            <div className="flex flex-col justify-center">
+              <h2 className="text-[16px] font-semibold text-gray-800 text-left">
+                Tech Stack
+              </h2>
+              <p className="text-[12px] text-gray-500">
+                A list of all the tech stack I used throughout my career.
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end w-full ">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search Tech Stack..."
+              className="w-[300px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
         </div>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition gap-2"
-        >
-          <Plus className="w-[18px]" />
-          Add Tech Stack
-        </button>
       </div>
 
       {/* Table */}
@@ -105,10 +126,10 @@ const Table: FC<TechStackProps> = (props) => {
                     </td>
                     <td className="px-4 py-3 flex justify-end">
                       <button
-                        className="flex items-center bg-purple-600 text-[14px] text-white px-4 py-2 rounded-md font-medium gap-2"
+                        className="flex items-center bg-purple-600 text-[12px] text-white px-4 py-1 rounded-md font-medium gap-1"
                         onClick={() => handleEdit(item._id)}
                       >
-                        <Pencil className="w-[18px]" />
+                        <Pencil className="w-[14px]" />
                         Edit
                       </button>
                     </td>
