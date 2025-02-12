@@ -4,14 +4,15 @@ import { sidebars } from "../utils/sidebars";
 
 interface SidebarProps {
   isMinimized: boolean;
+  showSideBar: boolean;
 }
 
-const Sidebar: FC<SidebarProps> = ({ isMinimized }) => {
+const Sidebar: FC<SidebarProps> = ({ isMinimized, showSideBar }) => {
   return (
     <div
-      className={`bg-white h-screen p-3 shadow-lg flex-col   ${
-        isMinimized ? "w-[83px]" : "w-[250px]"
-      }`}
+      className={`bg-white h-screen p-3 shadow-lg ${
+        showSideBar ? "flex-col" : "hidden"
+      } ${isMinimized ? "w-[83px]" : "w-[250px]"}`}
     >
       {/* Sidebar Header */}
       <div className={`flex justify-center items-center px-3 py-2 `}>

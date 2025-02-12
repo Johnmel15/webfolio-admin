@@ -5,10 +5,17 @@ import { useAuthStore } from "../store/authStore";
 
 interface HeaderProps {
   toggleMinimized: () => void;
+  setShowSideBar: (show: boolean) => void;
   isMinimized: boolean;
+  showSideBar: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ toggleMinimized, isMinimized }) => {
+const Header: FC<HeaderProps> = ({
+  toggleMinimized,
+  isMinimized,
+  setShowSideBar,
+  showSideBar,
+}) => {
   const { logout } = useAuthStore();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,9 +68,15 @@ const Header: FC<HeaderProps> = ({ toggleMinimized, isMinimized }) => {
         {/* Sidebar Toggle Button */}
         <button
           onClick={toggleMinimized}
-          className="cursor-pointer text-gray-600 hover:text-gray-700"
+          className="cursor-pointer text-gray-600 hover:text-gray-700 md:hidden"
         >
           {isMinimized ? <Menu /> : <AlignRight />}
+        </button>
+        <button
+          onClick={() => setShowSideBar(!showSideBar)}
+          className="cursor-pointer text-gray-600 hover:text-gray-700 md:flex"
+        >
+          {showSideBar ? <Menu /> : <AlignRight />}
         </button>
       </div>
 
