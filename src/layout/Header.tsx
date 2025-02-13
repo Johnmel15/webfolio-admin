@@ -2,6 +2,7 @@ import { AlignRight, CircleUser, LogOut, Menu } from "lucide-react";
 import { FC, useState } from "react";
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import useScreenSize from "../components/ScreenSize";
 
 interface HeaderProps {
   toggleMinimized: () => void;
@@ -16,6 +17,7 @@ const Header: FC<HeaderProps> = ({
   setShowSideBar,
   showSideBar,
 }) => {
+  const { isMobile } = useScreenSize();
   const { logout } = useAuthStore();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,46 +40,55 @@ const Header: FC<HeaderProps> = ({
 
   return (
     <div className="px-6 py-3 flex items-center justify-between relative">
-      <div className="flex items-center gap-10">
+      <div className={`flex items-center ${isMobile ? "" : "gap-10"}`}>
         <div className="flex flex-col items-start">
           {/* Breadcrumbs */}
-          <div className="flex items-center text-sm text-[#344767]">
-            <NavLink
-              to="/"
-              className="hover:text-[#344767] hover:font-[600] text-[12px] text-gray-400"
-            >
-              Pages
-            </NavLink>
-            {breadcrumbs.map((crumb, idx) => (
-              <span key={idx} className="flex items-center">
-                <span className="mx-2">/</span>
+          {!isMobile && (
+            <>
+              <div className="flex items-center text-sm text-[#344767]">
                 <NavLink
-                  to={crumb.path}
-                  className="hover:text-gray-800 text-[12px] text-[#344767] font-[600]"
+                  to="/"
+                  className="hover:text-[#344767] hover:font-[600] text-[12px] text-gray-400"
                 >
-                  {crumb.label}
+                  Pages
                 </NavLink>
-              </span>
-            ))}
-          </div>
-          <h3 className="text-[14px] text-[#344767] font-[600]">
-            {breadcrumbs[0]?.label || "Dashboard"}
-          </h3>
+                {breadcrumbs.map((crumb, idx) => (
+                  <span key={idx} className="flex items-center">
+                    <span className="mx-2">/</span>
+                    <NavLink
+                      to={crumb.path}
+                      className="hover:text-gray-800 text-[12px] text-[#344767] font-[600]"
+                    >
+                      {crumb.label}
+                    </NavLink>
+                  </span>
+                ))}
+              </div>
+              <h3 className="text-[14px] text-[#344767] font-[600]">
+                {breadcrumbs[0]?.label || "Dashboard"}
+              </h3>
+            </>
+          )}
         </div>
 
         {/* Sidebar Toggle Button */}
-        <button
-          onClick={toggleMinimized}
-          className="cursor-pointer text-gray-600 hover:text-gray-700 md:hidden"
-        >
-          {isMinimized ? <Menu /> : <AlignRight />}
-        </button>
-        <button
-          onClick={() => setShowSideBar(!showSideBar)}
-          className="cursor-pointer text-gray-600 hover:text-gray-700 md:flex"
-        >
-          {showSideBar ? <Menu /> : <AlignRight />}
-        </button>
+        {!isMobile && (
+          <button
+            onClick={toggleMinimized}
+            className="cursor-pointer text-gray-600 hover:text-gray-700 "
+          >
+            {isMinimized ? <Menu /> : <AlignRight />}
+          </button>
+        )}
+
+        {isMobile && (
+          <button
+            onClick={() => setShowSideBar(!showSideBar)}
+            className="cursor-pointer text-gray-600 hover:text-gray-700 md:flex"
+          >
+            {showSideBar ? <Menu /> : <AlignRight />}
+          </button>
+        )}
       </div>
 
       {/* Profile Section with Dropdown */}

@@ -1,7 +1,7 @@
 import useScreenSize from "../components/ScreenSize";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -13,12 +13,23 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   const { isMobile, isTablet } = useScreenSize();
 
-  console.log(isMobile);
-  console.log(isTablet);
+  useEffect(() => {
+    setShowSideBar(true);
+    if (isMobile) {
+      setShowSideBar(false);
+    }
+    if (isTablet) {
+      setShowSideBar(true);
+    }
+  }, [isMobile, isTablet]);
 
   return (
     <div className="bg-[#f8f9fa] w-full h-screen flex overflow-hidden">
-      <Sidebar isMinimized={isMinimized} showSideBar={showSideBar} />
+      <Sidebar
+        isMinimized={isMinimized}
+        showSideBar={showSideBar}
+        setShowSideBar={setShowSideBar}
+      />
       <div className="flex flex-col w-full h-full">
         <Header
           toggleMinimized={() => setIsMinimized(!isMinimized)}
@@ -26,8 +37,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           setShowSideBar={setShowSideBar}
           showSideBar={showSideBar}
         />
-        <div className="px-4">
-          <div className="px-4">
+        <div className="px-2 sm:px-2 md:px-2 lg:px-2">
+          <div className="px-2 sm:px-2 md:px-2 lg:px-2">
             <hr className="mt-0 bg-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
           </div>
         </div>
