@@ -10,3 +10,13 @@
   width: 100% !important;
 }
 
+ol, ul, menu {
+  list-style: auto;
+  margin: auto;
+  padding: revert;
+}
+
+li {
+  text-align: justify;
+}
+

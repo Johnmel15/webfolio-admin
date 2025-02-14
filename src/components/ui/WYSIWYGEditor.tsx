@@ -1,5 +1,6 @@
+import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
 import React, { useEffect } from "react";
-import { Editor, ContentEditableEvent, EditorProvider, Toolbar, BtnBold, BtnItalic, createButton } from "react-simple-wysiwyg";
+import { Editor, ContentEditableEvent, EditorProvider, Toolbar, BtnBold, BtnItalic, createButton, BtnBulletList, BtnUnderline, BtnNumberedList } from "react-simple-wysiwyg";
 
 interface WYSIWYGEditorProps {
   value: string;
@@ -11,9 +12,9 @@ const WYSIWYGEditor: React.FC<WYSIWYGEditorProps> = ({ value, onChange }) => {
     onChange(event.target.value); // Corrected event type
   };
 
-  const BtnAlignCenter = createButton('Align center', '≡', 'justifyCenter');
-  const BtnAlignLeft = createButton('Align left', '≡', 'justifyLeft');
-  const BtnAlignRight = createButton('Align right', '≡', 'justifyRight');
+  const BtnAlignCenter = createButton('Align center', <AlignCenter className="w-5 h-5"/>, 'justifyCenter');
+  const BtnAlignLeft = createButton('Align left', <AlignLeft className="w-5 h-5"/>, 'justifyLeft');
+  const BtnAlignRight = createButton('Align right', <AlignRight className="w-5 h-5"/>, 'justifyRight');
 
   useEffect(() => { document.execCommand("justifyLeft", false); }, []);
 
@@ -24,6 +25,9 @@ const WYSIWYGEditor: React.FC<WYSIWYGEditorProps> = ({ value, onChange }) => {
           <Toolbar>
             <BtnBold />
             <BtnItalic />
+            <BtnUnderline/>
+            <BtnBulletList/>
+            <BtnNumberedList/>
             <BtnAlignLeft />
             <BtnAlignCenter />
             <BtnAlignRight />

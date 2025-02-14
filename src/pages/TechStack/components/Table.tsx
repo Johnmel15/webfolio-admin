@@ -1,10 +1,11 @@
-import { Pencil, Plus } from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as RiIcons from "react-icons/ri";
 import * as BiIcons from "react-icons/bi";
 import * as SiIcons from "react-icons/si";
 import { FC } from "react";
+import { useTechStack } from "../../../states";
 
 interface TechStackProps {
   data: any[];
@@ -25,6 +26,8 @@ const Table: FC<TechStackProps> = (props) => {
     searchTerm,
     setSearchTerm,
   } = props;
+
+  const setIsDeleteVisible = useTechStack((state) => state.setIsDeleteVisible);
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 w-[100%]">
@@ -124,13 +127,20 @@ const Table: FC<TechStackProps> = (props) => {
                         #{item.icon_color}
                       </div>
                     </td>
-                    <td className="px-4 py-3 flex justify-end">
+                    <td className="px-4 py-3 flex justify-end gap-2">
                       <button
                         className="flex items-center bg-purple-600 text-[12px] text-white px-4 py-1 rounded-md font-medium gap-1"
                         onClick={() => handleEdit(item._id)}
                       >
                         <Pencil className="w-[14px]" />
                         Edit
+                      </button>
+                      <button
+                        className="flex items-center bg-red-600 text-[12px] text-white px-4 py-1 rounded-md font-medium gap-1"
+                        onClick={() => setIsDeleteVisible(true)}
+                      >
+                        <Trash className="w-[14px]" />
+                        Delete
                       </button>
                     </td>
                   </tr>

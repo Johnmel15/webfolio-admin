@@ -1,12 +1,15 @@
 import { FC, useState } from "react";
-import { AddTechStackModal, TechStackTable } from "./components";
+import { AddTechStackModal, TechStackDeleteModal, TechStackTable } from "./components";
 import { useGetTechStackQuery } from "../../hooks/queries";
 import { CustomModal, Pagination } from "../../components";
+import { useTechStack } from "../../states";
 
 const Container: FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [id, setId] = useState<string>("");
-
+  const id = useTechStack((state) => state.id);
+  const setId = useTechStack((state) => state.setId);
+  const isModalOpen = useTechStack((state) => state.isModalOpen);
+  const setIsModalOpen = useTechStack((state) => state.setIsModalOpen);
+  
   // Pagination states
   const [page, setPage] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -34,6 +37,7 @@ const Container: FC = () => {
         handleEdit={handleEdit}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+      
       />
 
       {/* Pagination Controls */}
@@ -58,6 +62,7 @@ const Container: FC = () => {
           />
         </CustomModal>
       )}
+      <TechStackDeleteModal />
     </div>
   );
 };

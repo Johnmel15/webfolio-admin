@@ -1,1 +1,1 @@
-export { CustomModal, Toast, Pagination } from "./ui";
+export { CustomModal, Toast, Pagination , ConfirmationModal } from "./ui";
