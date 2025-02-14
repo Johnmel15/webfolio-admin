@@ -1,15 +1,20 @@
 import { FC, useState } from "react";
-import { AddTechStackModal, TechStackDeleteModal, TechStackTable } from "./components";
+import {
+  AddTechStackModal,
+  TechStackDeleteModal,
+  TechStackTable,
+} from "./components";
 import { useGetTechStackQuery } from "../../hooks/queries";
-import { CustomModal, Pagination } from "../../components";
+import { CustomModal } from "../../components";
 import { useTechStack } from "../../states";
+import CustomPagination from "@/components/custom/CustomPagination";
 
 const Container: FC = () => {
   const id = useTechStack((state) => state.id);
   const setId = useTechStack((state) => state.setId);
   const isModalOpen = useTechStack((state) => state.isModalOpen);
   const setIsModalOpen = useTechStack((state) => state.setIsModalOpen);
-  
+
   // Pagination states
   const [page, setPage] = useState<number>(1);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -37,15 +42,14 @@ const Container: FC = () => {
         handleEdit={handleEdit}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-      
       />
 
       {/* Pagination Controls */}
-      <div className="flex justify-center w-full">
-        <Pagination
+      <div className="flex justify-center w-full mt-4 space-x-2">
+        <CustomPagination
           currentPage={page}
           totalPages={totalPages}
-          onPageChange={(newPage) => setPage(newPage)}
+          onPageChange={(page) => setPage(page)}
         />
       </div>
 

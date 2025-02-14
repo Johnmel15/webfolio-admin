@@ -9,7 +9,7 @@ import { IconType } from "react-icons";
 import { SketchPicker } from "react-color";
 import debounce from "lodash.debounce";
 import { useTechStackMutation } from "../../../hooks/mutations";
-import { showToast } from "../../../components/ui/Toast";
+// import { showToast } from "../../../components/ui/Toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetOneTechStackQuery } from "../../../hooks/queries";
 
@@ -106,7 +106,7 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
     }
 
     if (response.code === 200) {
-      showToast(response.message, "success");
+      // showToast(response.message, "success");
       setId?.("");
       setIsModalOpen(false);
       cache.invalidateQueries({ queryKey: ["tech_stack_list"] });
@@ -117,14 +117,14 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Icon Selector */}
       <div className="relative">
-        <label className="block text-left text-sm font-medium text-gray-700">
+        <label className="block text-left text-[12px] font-medium text-gray-700">
           Select Icon
         </label>
         <div className="flex items-center border border-gray-300 rounded-md gap-2 px-2 py-1 mt-1">
           {SelectedIcon && <SelectedIcon className="w-5 h-5" />}
           <input
             type="text"
-            className="w-full border-none outline-none p-2"
+            className="w-full border-none outlin text-[12px] e-none p-2"
             placeholder="Search Icon"
             value={searchTerm}
             onChange={(e) => {
@@ -172,12 +172,12 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
 
       {/* Name Field */}
       <div>
-        <label className="block text-left text-sm font-medium text-gray-700">
+        <label className="block text-left text-[12px] font-medium text-gray-700">
           Name
         </label>
         <input
           type="text"
-          className="w-full border border-gray-300 rounded-md p-2 focus:ring-purple-500 focus:border-purple-500"
+          className="w-full border border-gray-300 rounded-md p-2 text-[12px] mt-1 focus:ring-purple-500 focus:border-purple-500"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         />
@@ -185,12 +185,12 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
 
       {/* Category Field */}
       <div>
-        <label className="block text-left text-sm font-medium text-gray-700">
+        <label className="block text-left text-[12px] font-medium text-gray-700">
           Category
         </label>
         <input
           type="text"
-          className="w-full border border-gray-300 rounded-md p-2 focus:ring-purple-500 focus:border-purple-500"
+          className="w-full border border-gray-300 rounded-md text-[12px] p-2 mt-1 focus:ring-purple-500 focus:border-purple-500"
           value={formData.category}
           onChange={(e) =>
             setFormData({ ...formData, category: e.target.value })
@@ -218,13 +218,13 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
 
       {/* Color Picker */}
       <div>
-        <label className="block text-left text-sm font-medium text-gray-700">
+        <label className="block text-left text-[12px] font-medium text-gray-700">
           Icon Color
         </label>
         <div className="flex items-center border border-gray-300 rounded-md gap-2 px-2 py-1 mt-1">
           <input
             type="text"
-            className="w-full border-none outline-none p-2"
+            className="w-full border-none outline-none text-[12px] p-2"
             value={formData.icon_color ? `#${formData.icon_color}` : ""}
             onChange={(e) => {
               const newColor = e.target.value.replace("#", "").trim();
@@ -249,7 +249,7 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
       <div className="flex justify-end gap-2">
         <button
           type="button"
-          className="w-fit px-4 bg-red-400 text-white py-2 rounded-md hover:bg-red-500 transition"
+          className="w-fit text-[12px] font-semibold px-4 bg-red-400 text-white py-2 rounded-md hover:bg-red-500 transition"
           onClick={() => {
             setIsModalOpen(false);
             setId?.("");
@@ -259,7 +259,7 @@ const FormModal: FC<ModalProps> = ({ setIsModalOpen, id, setId }) => {
         </button>
         <button
           type="submit"
-          className="w-fit px-4 bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition"
+          className="w-fit text-[12px] font-semibold px-4 bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition"
         >
           Submit
         </button>

@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 import { useAuthStore } from "../store/authStore";
 import { Navigate, Route, Routes, BrowserRouter } from "react-router-dom";
 import { DashboardContainer } from "../pages/Dashboard";
-import { MainLayout } from "../layout";
+// import { MainLayout } from "../layout";
 import { About } from "../pages/About";
 import { TechStack } from "../pages/TechStack";
 import { ExperiencePage } from "../pages/Experience";
@@ -14,6 +14,7 @@ import { LeadsPage } from "../pages/Leads";
 import { SettingsPage } from "../pages/Settings";
 import { LoginPage } from "../pages/Login";
 import IdleLogout from "../components/IdleLogout";
+import Layout from "@/layout/Layout";
 
 interface RouteProps {
   children: ReactNode;
@@ -27,7 +28,7 @@ const ProtectedRoute: React.FC<RouteProps> = ({ children }) => {
     return <Navigate to="/login" />;
   }
 
-  return <MainLayout>{children}</MainLayout>;
+  return <Layout>{children}</Layout>;
 };
 
 // Public Route Component (redirect if authenticated)

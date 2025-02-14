@@ -37,27 +37,27 @@ const Table: FC<TechStackProps> = (props) => {
           <div className="flex items-center gap-2 w-full">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center px-4 py-2 bg-purple-600 text-white text-[12px] lg:text-[16px] md:text-[14px] sm:text-[12px] font-medium rounded-md hover:bg-purple-700 transition gap-2"
+              className="flex items-center px-4 py-2 bg-purple-600 text-white text-[12px] lg:text-[12px] md:text-[14px] sm:text-[12px] font-medium rounded-md hover:bg-purple-700 transition gap-2"
             >
               <Plus className="w-[18px] " />
               Add
             </button>
             <div className="flex flex-col justify-center">
-              <h2 className="text-[11px] lg:text-[16px] md:text-[14px] sm:text-[12px] font-semibold text-gray-800 text-left">
+              <h2 className="text-[11px] lg:text-[16px] md:text-[14px] sm:text-[12px] font-medium text-gray-800 text-left">
                 Tech Stack
               </h2>
-              <p className="text-[10px] lg:text-[16px] md:text-[9px] sm:text-[12px] text-start text-gray-500">
+              <p className="text-[10px] lg:text-[12px] md:text-[9px] sm:text-[12px] font-light text-start text-gray-500">
                 A list of all the tech stack I used throughout my career.
               </p>
             </div>
           </div>
-          <div className="flex justify-end w-full ">
+          <div className="flex justify-end w-full">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search Tech Stack..."
-              className="w-[250px] sm:w-[250px] md:w-[250px] lg:w-[300px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-[250px] sm:w-[250px] md:w-[250px] lg:w-[300px] text-[12px] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
         </div>
@@ -88,10 +88,12 @@ const Table: FC<TechStackProps> = (props) => {
                   RiIcons[item.icon as keyof typeof RiIcons] ||
                   BiIcons[item.icon as keyof typeof BiIcons];
 
-                const categoryPallete =
-                  item.category?.toUpperCase() === "FRONTEND"
-                    ? `bg-green-700`
-                    : ` bg-blue-700`;
+                const categoryPallete: any = {
+                  ["frontend"]: `bg-green-700`,
+                  ["backend"]: `bg-blue-700`,
+                  ["database"]: `bg-orange-700`,
+                  ["tools and others"]: `bg-gray-700`,
+                };
 
                 return (
                   <tr
@@ -113,7 +115,9 @@ const Table: FC<TechStackProps> = (props) => {
                     </td>
                     <td className="px-4 py-3 text-gray-600 text-left text-[10px]">
                       <div
-                        className={`flex items-center text-white px-2 w-fit h-5 rounded-lg ${categoryPallete}`}
+                        className={`flex items-center text-white px-2 w-fit h-5 rounded-full ${
+                          categoryPallete[item.category?.toLowerCase()]
+                        }`}
                       >
                         {item.category?.toUpperCase()}
                       </div>
@@ -122,7 +126,7 @@ const Table: FC<TechStackProps> = (props) => {
                       <div className="flex gap-2 items-center">
                         <div
                           style={{ backgroundColor: `#${item.icon_color}` }}
-                          className={`w-fit px-2 py-2 rounded-sm`}
+                          className={`w-5 h-5 px-2 py-2 rounded-full`}
                         ></div>
                         #{item.icon_color}
                       </div>

@@ -1,1 +1,1 @@
-export { default as DashboardContainer } from "./container";
+export { default as DashboardContainer } from "./Container";

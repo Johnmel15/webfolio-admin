@@ -10,9 +10,11 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer />
-      <AppRoutes />
-      <ReactQueryDevtools />
+      <div>
+        <ToastContainer />
+        <AppRoutes />
+        <ReactQueryDevtools />
+      </div>
     </QueryClientProvider>
   );
 }
