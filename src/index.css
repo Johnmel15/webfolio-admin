@@ -11,12 +11,25 @@
 }
 
 ol, ul, menu {
-  list-style: auto;
   margin: auto;
   padding: revert;
 }
 
+.rsw-ce ul {
+  list-style: disc;
+  padding-left: 2em;
+}
+
+.rsw-ce ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+
 li {
   text-align: justify;
+}
+
+.rsw-btn[data-active=true]{
+  background: #8887a5 !important;
 }
 
