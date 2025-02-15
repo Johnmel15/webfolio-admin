@@ -7,7 +7,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"; // Ensure this is the correct path
+} from "../../components/ui/pagination"; // Ensure this is the correct path
 
 interface PaginationProps {
   currentPage: number;
