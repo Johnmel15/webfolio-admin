@@ -1,1 +1,1 @@
-export { CustomModal, ConfirmationModal } from "./ui";
+export { CustomModal, ConfirmationModal, Pagination } from "./ui";

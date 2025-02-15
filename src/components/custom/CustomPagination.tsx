@@ -1,6 +1,6 @@
 import { FC } from "react";
+import { Pagination } from "../ui";
 import {
-  Pagination,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
