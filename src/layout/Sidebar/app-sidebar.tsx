@@ -1,5 +1,3 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,42 +9,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { sidebars } from "@/utils/sidebars";
+import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
-
-export function AppSidebar() {
+const AppSidebar: FC = () => {
   return (
     <Sidebar>
-      <div className="px-2 py-1 w-full">
+      <div className="px-2 py-4 w-full">
         <Button variant="ghost" className="w-full">
-          WebFolio
+          JMS - WebFolio
         </Button>
       </div>
 
@@ -57,20 +29,33 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url} className="text-[13.13px]">
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {sidebars.map((item) => {
+                const isActive = window.location.pathname === item.path;
+                return (
+                  <SidebarMenuItem key={item.label}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive}
+                      className={`flex items-center gap-4 px-3 py-2 rounded-md hover:bg-purple-800 hover:text-white ${
+                        isActive
+                          ? "bg-purple-800 shadow-md text-white focus:bg-purple-800 focus:text-white"
+                          : "text-gray-700 hover:bg-purple-800"
+                      }`}
+                    >
+                      <NavLink to={item.path}>
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );
-}
+};
+
+export default AppSidebar;
