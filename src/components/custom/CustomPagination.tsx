@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { Pagination } from "../ui";
 import {
+  Pagination,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../ui/pagination";
+} from "@/components/ui/pagination"; // Ensure this is the correct path
 
 interface PaginationProps {
   currentPage: number;
@@ -25,17 +25,12 @@ const CustomPagination: FC<PaginationProps> = ({
     const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
-      // If total pages are within the limit, show all pages
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
-      // Always include the first page
       pages.push(1);
-
-      // Determine the range of numbers to display
       let start = Math.max(2, currentPage - 1);
       let end = Math.min(totalPages - 1, currentPage + 1);
 
-      // Ensure at least `maxVisiblePages - 2` pages are visible
       if (currentPage <= 2) {
         start = 2;
         end = 4;
@@ -44,16 +39,9 @@ const CustomPagination: FC<PaginationProps> = ({
         end = totalPages - 1;
       }
 
-      // Add ellipsis if there's a gap after page 1
       if (start > 2) pages.push("...");
-
-      // Add range of pages
       for (let i = start; i <= end; i++) pages.push(i);
-
-      // Add ellipsis if there's a gap before the last page
       if (end < totalPages - 1) pages.push("...");
-
-      // Always include the last page
       pages.push(totalPages);
     }
 
@@ -63,7 +51,6 @@ const CustomPagination: FC<PaginationProps> = ({
   return (
     <Pagination>
       <PaginationContent>
-        {/* Previous Button */}
         <PaginationItem>
           <PaginationPrevious
             onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
@@ -75,7 +62,6 @@ const CustomPagination: FC<PaginationProps> = ({
           />
         </PaginationItem>
 
-        {/* Page Numbers */}
         {getPageNumbers().map((page, index) => (
           <PaginationItem key={index} className="cursor-pointer">
             {page === "..." ? (
@@ -91,7 +77,6 @@ const CustomPagination: FC<PaginationProps> = ({
           </PaginationItem>
         ))}
 
-        {/* Next Button */}
         <PaginationItem>
           <PaginationNext
             onClick={() =>
