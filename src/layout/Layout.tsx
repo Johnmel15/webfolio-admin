@@ -8,13 +8,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <div className="flex w-full">
         <AppSidebar />
-        <main className="flex flex-col w-full">
+        <main className="flex flex-col w-full h-[-webkit-fill-available]">
           <div className="flex items-center py-4 px-4">
             <SidebarTrigger />
-            <Breadcrumb/>
+            <Breadcrumb />
           </div>
           <Separator />
-          <div className="px-6 py-4 overflow-auto w-full max-w-screen-xl mx-auto">
+          <div className="px-6 py-4 overflow-auto w-full max-w-screen-xl mx-auto h-[-webkit-fill-available]">
             {children}
           </div>
         </main>

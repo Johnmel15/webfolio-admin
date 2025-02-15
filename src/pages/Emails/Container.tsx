@@ -1,14 +1,13 @@
-import { FC } from 'react';
-import { EmailList } from './components';
-import { Card } from '@/components/ui/card';
+import { FC } from "react";
+import { Content, EmailList } from "./components";
+import { Card } from "@/components/ui/card";
 
 const Container: FC = () => {
   return (
-    <Card className="flex w-full px-4 py-3">
-      <EmailList/>
-      <div className="px-2 py-2 border border-gray-400 border-l-0 w-full">adasd</div>
-    </Card>
-    
+    <div className="flex border w-full px-4 py-3 h-full">
+      <EmailList />
+      <Content />
+    </div>
   );
 };
 
