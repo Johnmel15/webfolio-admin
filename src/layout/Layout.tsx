@@ -5,11 +5,13 @@ import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+
   return (
     <SidebarProvider>
       <TooltipProvider>
         <div className="flex w-full">
           <AppSidebar />
+          <button>Logout</button>
           <main className="flex flex-col w-full h-[-webkit-fill-available]">
             <div className="flex items-center py-4 px-4">
               <SidebarTrigger />

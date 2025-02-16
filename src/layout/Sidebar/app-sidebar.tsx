@@ -11,9 +11,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { sidebars } from "@/utils/sidebars";
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
 
 const AppSidebar: FC = () => {
+
+  const navigate = useNavigate();
+  const { logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirect to login after logout
+  };
   return (
     <Sidebar>
       <div className="px-2 py-4 w-full">
@@ -50,6 +58,11 @@ const AppSidebar: FC = () => {
                   </SidebarMenuItem>
                 );
               })}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <div onClick={handleLogout}>Logout</div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

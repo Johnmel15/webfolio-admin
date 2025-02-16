@@ -8,19 +8,33 @@ import {
 } from "@/components/ui/tooltip";
 import { useEmail } from "@/states";
 import { formatDate, getInitials } from "@/utils/helper";
-import { Trash2 } from "lucide-react";
+import { Archive, Trash2 } from "lucide-react";
 
 const Content: FC = () => {
-  const { id, name, message, subject, date, email } = useEmail();
+  const { id, name, message, subject, date, email, setIsShowDelete } =
+    useEmail();
 
   return (
     <div className="w-full md:w-2/3 flex flex-col">
       {id ? (
         <>
-          <div className="flex justify-between items-center border-b p-4">
-            <button className="text-gray-500 hover:text-red-500">
-              <Trash2 size={18} />
-            </button>
+          <div className="flex gap-4 items-center border-b p-4">
+            <Tooltip>
+              <TooltipTrigger>
+                <p className="text-[10px] font-[400] text-black">
+                  <Trash2 size={18} onClick={() => setIsShowDelete(true)} />
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>Delete</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger>
+                <p className="text-[10px] font-[400] text-black">
+                  <Archive size={18} />
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>Archive</TooltipContent>
+            </Tooltip>
           </div>
           <div className="flex px-4 py-4 gap-2 w-full justify-between border border-t-0 border-l-0 border-r-0 border-[#e4e4e7]">
             <div className="flex justify-center items-center bg-gray-300 size-8 rounded-full ring-2 ring-white border text-[12px] font-[600]">
@@ -37,10 +51,10 @@ const Content: FC = () => {
               <p className="text-end">{formatDate(date)}</p>
             </div>
           </div>
-          <div className="flex justify-start items-start w-full overflow-y-auto p-4 text-start text-[.875rem] leading-relaxed whitespace-pre-line">
+          <div className="flex justify-start items-start w-full overflow-y-auto p-4 text-start text-[.875rem] text-[#09090b] h-[-webkit-fill-available] leading-relaxed whitespace-pre-line">
             {message}
           </div>
-          <div className="mt-auto border-t pt-2">
+          <div className="mt-auto border-t p-4">
             <Textarea className="text-sm" placeholder={`Reply to ${name}...`} />
             <div className="flex justify-end mt-2">
               <Button>Send</Button>
@@ -48,7 +62,9 @@ const Content: FC = () => {
           </div>
         </>
       ) : (
-        <p className="text-center text-gray-500">Select an email to view.</p>
+        <div className="flex justify-center items-center h-full">
+          <p className="text-center text-gray-500">Select an email to view.</p>
+        </div>
       )}
     </div>
   );

@@ -17,15 +17,20 @@ export const useEmail = create<Email>((set) => ({
   date: "",
   message: "",
   email: "",
-  
+  isSelected: "",
+  isShowDelete: false,
+
   setId: (id: string) => set({ id }),
   setName: (name: string) => set({ name }),
   setSubject: (subject: string) => set({ subject }),
   setDate: (date: string) => set({ date }),
   setMessage: (message: string) => set({ message }),
   setEmail: (message: string) => set({ message }),
+  setIsSelected: (isSelected: string) => set({ isSelected }),
+  setIsShowDelete: (isShowDelete: boolean) => set({ isShowDelete }),
 
   handleEmail: (id: string, name: string, subject: string, date: string, message: string, email: string) => {
     set({ id, name, subject, date, message, email });
   }
+
 }));

@@ -12,24 +12,28 @@ import { formatDate, formatRelativeDate } from "@/utils/helper";
 const EmailList: FC = () => {
   const { dataEmail, loadingEmail } = useGetAllEmailsQuery();
   const handleEmail = useEmail((state) => state.handleEmail);
-
+  const isSelected = useEmail((state) => state.isSelected);
+  const setIsSelected = useEmail((state) => state.setIsSelected);
+  console.log(dataEmail)
+  console.log(isSelected)
   return (
-    <div className="w-full md:w-1/3 border-r p-4 overflow-y-auto">
+    <div className="w-full md:w-1/3 border-r p-4 ">
       <h2 className="text-xl font-semibold">Inbox</h2>
       <input
         type="text"
         placeholder="Search"
         className="w-full mt-2 p-2 border rounded-md"
       />
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 space-y-2 overflow-y-auto h-[65vh]">
         {!loadingEmail &&
           dataEmail.map((email: any, idx: number) => (
             <Fragment key={idx}>
               <Card
-                className="group flex flex-col items-start p-4 hover:bg-gray-100 cursor-pointer"
+                className={`group flex flex-col items-start p-4 hover:bg-gray-100 cursor-pointer ${isSelected === email._id ? 'bg-gray-100 border-black' : ''}`}
                 onClick={() => {
+                  setIsSelected(email._id)
                   handleEmail(
-                    String(email.id),
+                    String(email._id),
                     email.name,
                     email.subject,
                     email.createdAt,
