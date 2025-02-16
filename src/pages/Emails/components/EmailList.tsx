@@ -1,32 +1,27 @@
 import { FC, Fragment } from "react";
 import { Card } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useGetAllEmailsQuery } from "@/hooks/queries";
 import { useEmail } from "@/states";
 import { formatDate, formatRelativeDate } from "@/utils/helper";
 
-interface EmailListProps {
-  setSelectedEmail: (value: boolean) => void;
-}
-
-const EmailList: FC<EmailListProps> = ({ setSelectedEmail }) => {
+const EmailList: FC = () => {
   const { dataEmail, loadingEmail } = useGetAllEmailsQuery();
   const handleEmail = useEmail((state) => state.handleEmail);
 
   return (
-    <div className="flex flex-col justify-start items-start w-full md:w-[40%]">
-      <div className="flex px-4 py-2 w-full border border-[#e4e4e7]">
-        <p className="text-[16px] font-semibold">Inbox</p>
-      </div>
-      <div className="flex px-4 py-2 w-full border border-t-0 border-[#e4e4e7]">
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-full text-[12px] px-4 py-2 border border-[#e4e4e7] rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-      </div>
-
-      <div className="flex flex-col gap-2 px-4 py-2 w-full border border-[#e4e4e7] border-t-0 h-full max-h-[74vh] overflow-y-auto">
+    <div className="w-full md:w-1/3 border-r p-4 overflow-y-auto">
+      <h2 className="text-xl font-semibold">Inbox</h2>
+      <input
+        type="text"
+        placeholder="Search"
+        className="w-full mt-2 p-2 border rounded-md"
+      />
+      <div className="mt-4 space-y-2">
         {!loadingEmail &&
           dataEmail.map((email: any, idx: number) => (
             <Fragment key={idx}>
@@ -41,7 +36,6 @@ const EmailList: FC<EmailListProps> = ({ setSelectedEmail }) => {
                     email.message,
                     email.email
                   );
-                  setSelectedEmail(true);
                 }}
               >
                 <div className="flex justify-between items-center gap-2 w-full">
@@ -52,7 +46,9 @@ const EmailList: FC<EmailListProps> = ({ setSelectedEmail }) => {
                         {formatRelativeDate(email.createdAt)}
                       </p>
                     </TooltipTrigger>
-                    <TooltipContent>{formatDate(email.createdAt)}</TooltipContent>
+                    <TooltipContent>
+                      {formatDate(email.createdAt)}
+                    </TooltipContent>
                   </Tooltip>
                 </div>
                 <p className="text-[12px] font-[500]">{email.subject}</p>
