@@ -11,7 +11,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <TooltipProvider>
         <div className="flex w-full">
           <AppSidebar />
-          <button>Logout</button>
           <main className="flex flex-col w-full h-[-webkit-fill-available]">
             <div className="flex items-center py-4 px-4">
               <SidebarTrigger />

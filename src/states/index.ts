@@ -31,6 +31,8 @@ export const useEmail = create<Email>((set) => ({
 
   handleEmail: (id: string, name: string, subject: string, date: string, message: string, email: string) => {
     set({ id, name, subject, date, message, email });
-  }
+  },
+
+  clearEmailState: () => set({ id: "", name: "", subject: "", date: "", message: "", email: "", isSelected: "" }),
 
 }));

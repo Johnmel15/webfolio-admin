@@ -12,6 +12,7 @@ const DeleteModal: FC = () => {
   const setIsShowDelete = useEmail((state) => state.setIsShowDelete);
   const isShowDelete = useEmail((state) => state.isShowDelete);
   const id = useEmail((state) => state.id);
+  const clearEmailState = useEmail((state) => state.clearEmailState);
 
   const { toast } = useToast();
 
@@ -27,6 +28,7 @@ const DeleteModal: FC = () => {
         description: `${response.message}`,
       });
       setIsShowDelete(false);
+      clearEmailState();
       cache.invalidateQueries({ queryKey: ["email_list"] });
     } else {
       toast({

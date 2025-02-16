@@ -54,5 +54,6 @@ export type Email = {
   setIsSelected: (isSelected: string) => void,
   setIsShowDelete: (isShowDelete: boolean) => void,
 
-  handleEmail: (id: string, name: string, subject: string, date: string, message: string, email: string) => void
+  handleEmail: (id: string, name: string, subject: string, date: string, message: string, email: string) => void,
+  clearEmailState: () => void,
 };
