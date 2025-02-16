@@ -7,7 +7,7 @@ import { Content, EmailList } from "./components";
 export default function EmailDashboard() {
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen border">
+    <div className="flex flex-col md:flex-row w-full h-[80vh] border ">
       {/* Sidebar - Email List */}
       <EmailList />
       
