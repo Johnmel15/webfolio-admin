@@ -8,7 +8,6 @@ export async function fetchQuery({ queryKey }: any) {
 
   try {
     const response = await api(token).get(endpoint);
-
     return response.data ?? [];
   } catch (error) {
     console.error("Error fetching data:", error);

@@ -1,2 +1,2 @@
-export { useGetTechStackQuery } from "./GetAll";
+export { useGetTechStackQuery, useGetAllEmailsQuery } from "./GetAll";
 export { useGetOneTechStackQuery } from "./GetOne";

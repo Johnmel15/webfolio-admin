@@ -14,7 +14,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   onCancel,
 }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg p-6 shadow-lg">
         <h2 className="text-md text-start font-semibold mb-4">{title}</h2>
         <p className="text-start text-sm font-regular mb-4">{message}</p>
