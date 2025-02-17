@@ -9,7 +9,9 @@ interface Props {
 const useGetAllEmailsQuery = ({ search, unread, archived }: Props) => {
   const { data, isLoading, refetch, isFetching, isError } = useGetAllQuery({
     variables: { key: "email_list" },
-    endpoint: `/email?search=${search}&unread=${unread}&archived=${archived}`,
+    endpoint: `/email?archived=${archived}${search ? `&search=${search}` : ``}${
+      unread ? `&unread=${unread}` : ``
+    }`,
   });
 
   return {

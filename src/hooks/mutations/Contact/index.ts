@@ -20,7 +20,7 @@ const useContactMutation = () => {
   const archiveEmail = async (variables: any, id: string) => {
     return patchOne.mutateAsync({
       endpoint: `/email/${id}/archive`,
-      variables,
+      variables
     });
   };
 

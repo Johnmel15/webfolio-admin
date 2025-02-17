@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
@@ -519,6 +517,7 @@ const sidebarMenuButtonVariants = cva(
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+        custom: "flex items-center gap-4 rounded-md active:bg-purple-800 active:text-white hover:bg-purple-800 hover:text-white hover:font-[500] data-[state=open]:hover:bg-purple-800 data-[state=open]:hover:text-white data-[active=true]:bg-purple-800 data-[active=true]:text-white",
       },
       size: {
         default: "h-8 text-sm",
@@ -556,15 +555,13 @@ const SidebarMenuButton = React.forwardRef<
     const Comp = asChild ? Slot : "button";
     const { isMobile, state } = useSidebar();
 
-    console.log(cn(sidebarMenuButtonVariants({ variant, size })));
-
     const button = (
       <Comp
         ref={ref}
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
-        className={className}
+        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
         {...props}
       />
     );
@@ -761,5 +758,5 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-  // useSidebar,
+  useSidebar,
 };

@@ -9,10 +9,31 @@ import {
 import { useEmail } from "@/states";
 import { formatDate, getInitials } from "@/utils/helper";
 import { Archive, Trash2 } from "lucide-react";
+import { useContactMutation } from "@/hooks/mutations";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const Content: FC = () => {
+  const cache = useQueryClient();
   const { id, name, message, subject, date, email, setIsShowDelete } =
     useEmail();
+
+  const { archiveEmail } = useContactMutation();
+
+  const handleArchive = async () => {
+    const response = await archiveEmail({ archived: true }, id);
+    if (response.code === 200) {
+      toast({
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+        ),
+        title: "Confirmation",
+        description: `${response.message}`,
+      });
+      cache.invalidateQueries({ queryKey: ["email_list"] });
+    }
+  };
 
   return (
     <div className="w-full md:w-2/3 flex flex-col">
@@ -30,7 +51,7 @@ const Content: FC = () => {
             <Tooltip>
               <TooltipTrigger>
                 <p className="text-[10px] font-[400] text-black">
-                  <Archive size={18} />
+                  <Archive size={18} onClick={handleArchive} />
                 </p>
               </TooltipTrigger>
               <TooltipContent>Archive</TooltipContent>
