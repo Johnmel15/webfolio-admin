@@ -17,7 +17,14 @@ const useContactMutation = () => {
     });
   };
 
-  return { deleteEmail, readEmail };
+  const archiveEmail = async (variables: any, id: string) => {
+    return patchOne.mutateAsync({
+      endpoint: `/email/${id}/archive`,
+      variables,
+    });
+  };
+
+  return { deleteEmail, readEmail, archiveEmail };
 };
 
 export default useContactMutation;

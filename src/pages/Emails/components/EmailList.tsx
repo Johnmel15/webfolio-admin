@@ -26,6 +26,7 @@ const EmailList: FC = () => {
   const { dataEmail, loadingEmail } = useGetAllEmailsQuery({
     search: "",
     unread: filter === "unread",
+    archived: false,
   });
 
   const handleRead = async (emailId: string) => {
